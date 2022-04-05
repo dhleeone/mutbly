@@ -35,7 +35,7 @@ class SellerAccount(APIView):
             serializer = SellerSerializer(instance)
             return Response(serializer.data)
         except:
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
         try:
@@ -43,7 +43,7 @@ class SellerAccount(APIView):
             serializer = SellerSerializer(instance, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -85,7 +85,7 @@ class SellerProduct(APIView):
         serializer = ProductSerializer(instance, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
